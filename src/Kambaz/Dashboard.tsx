@@ -125,15 +125,6 @@ export default function Dashboard() {
                         </td>
                     </tr>
                 </table>
-
-
-
-
-
-
-
-
-
             </div>
         </div>
     );

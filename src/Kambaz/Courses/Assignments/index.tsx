@@ -1,3 +1,7 @@
+import Exams from "./Exams";
+import Projects from "./Projects";
+import Quizzes from "./Quizzes";
+
 export default function Assignments() {
   return (
     <div id="wd-assignments">
@@ -5,11 +9,11 @@ export default function Assignments() {
         id="wd-search-assignment" />
       <button id="wd-add-assignment-group">+ Group</button>
       <button id="wd-add-assignment">+ Assignment</button>
+
       <h3 id="wd-assignments-title">
         ASSIGNMENTS 40% of Total <button>+</button> </h3>
 
       <ul id="wd-assignment-list">
-
         <li className="wd-assignment-list-item">
           <a href="#/Kambaz/Courses/1234/Assignments/123"
             className="wd-assignment-link" >
@@ -20,7 +24,6 @@ export default function Assignments() {
             <b> Due</b> May 13 at 11:59pm | 100 pts
           </span>
         </li>
-
         <li className="wd-assignment-list-item">
           <a href="#/Kambaz/Courses/1234/Assignments/123"
             className="wd-assignment-link" >
@@ -31,7 +34,6 @@ export default function Assignments() {
             <b> Due</b> May 20 at 11:59pm | 100 pts
           </span>
         </li>
-
         <li className="wd-assignment-list-item">
           <a href="#/Kambaz/Courses/1234/Assignments/123"
             className="wd-assignment-link" >
@@ -42,8 +44,12 @@ export default function Assignments() {
             <b> Due</b> May 27 at 11:59pm | 100 pts
           </span>
         </li>
-
       </ul>
+
+      <div><Quizzes /></div>
+      <div><Exams /></div>
+      <div><Projects /></div>
+      
     </div>
   );
 }

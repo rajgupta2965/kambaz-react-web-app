@@ -17,11 +17,9 @@ export default function Lab1() {
         is the largest heading and h6 is the smallest heading.
       </div>
 
-
       {/* do the next exercise here */}
       <div id="wd-p-tag">
         <h4>Paragraph Tag</h4>
-
         <p id="wd-p-1">
           This is a paragraph. We often separate a long set of sentences with vertical
           spaces to make the text easier to read. Browsers ignore vertical white spaces
@@ -70,7 +68,6 @@ export default function Lab1() {
               <li>Grill the toast</li>
             </ol>
           </li>
-
           <li>Omelette
             <ol>
               <li>Take some eggs in a bowl</li>
@@ -129,11 +126,53 @@ export default function Lab1() {
               <td>2/17/21</td>
               <td>95</td>
             </tr>
+            <tr>
+              <td>Q4</td>
+              <td>Bootstrap</td>
+              <td>2/22/21</td>
+              <td>98</td>
+            </tr>
+            <tr>
+              <td>Q5</td>
+              <td>DOM</td>
+              <td>2/25/21</td>
+              <td>96</td>
+            </tr>
+            <tr>
+              <td>Q6</td>
+              <td>Node.js</td>
+              <td>2/29/21</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>Q7</td>
+              <td>Express.js</td>
+              <td>3/04/21</td>
+              <td>96</td>
+            </tr>
+            <tr>
+              <td>Q8</td>
+              <td>SQL</td>
+              <td>3/08/21</td>
+              <td>94</td>
+            </tr>
+            <tr>
+              <td>Q9</td>
+              <td>MongoDB</td>
+              <td>3/13/21</td>
+              <td>92</td>
+            </tr>
+            <tr>
+              <td>Q10</td>
+              <td>React</td>
+              <td>3/17/21</td>
+              <td>90</td>
+            </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colSpan={3}>Average</td>
-              <td>90</td>
+              <td>93.1</td>
             </tr>
           </tfoot>
         </table>
@@ -165,86 +204,76 @@ export default function Lab1() {
             value="Wonderland"
             title="The last name"
             id="wd-text-fields-last-name" /> <br />
+
           {/* copy rest of form elements here  */}
           <label htmlFor="wd-text-fields-hint">Hint: </label>
           <input type="text" placeholder="hint" title="tooltip"
             value="COMEDY" />
+
+          <h5>Text boxes</h5>
+          <label>Biography:</label><br />
+          <textarea id="wd-textarea" cols={30} rows={10}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+            est laborum.
+          </textarea>
+
+          <h5 id="wd-buttons">Buttons</h5>
+          <button type="button"
+            onClick={() => alert("Life is Good!")}
+            id="wd-all-good">
+            Hello World!
+          </button>
+
+          <h5 id="wd-radio-buttons">Radio buttons</h5>
+          <label>Favorite movie genre:</label><br />
+          <input type="radio" name="radio-genre" id="wd-radio-comedy" />
+          <label htmlFor="wd-radio-comedy">Comedy</label><br />
+          <input type="radio" name="radio-genre" id="wd-radio-drama" />
+          <label htmlFor="wd-radio-drama">Drama</label><br />
+          <input type="radio" name="radio-genre" id="wd-radio-scifi" />
+          <label htmlFor="wd-radio-scifi">Science Fiction</label><br />
+          <input type="radio" name="radio-genre" id="wd-radio-fantasy" />
+          <label htmlFor="wd-radio-fantasy">Fantasy</label>
+
+
+          <h5 id="wd-checkboxes">Checkboxes</h5>
+          <label>Favorite movie genre:</label><br />
+          <input type="checkbox" name="check-genre" id="wd-chkbox-comedy" />
+          <label htmlFor="wd-chkbox-comedy">Comedy</label><br />
+          <input type="checkbox" name="check-genre" id="wd-chkbox-drama" />
+          <label htmlFor="wd-chkbox-drama">Drama</label><br />
+          <input type="checkbox" name="check-genre" id="wd-chkbox-scifi" />
+          <label htmlFor="wd-chkbox-scifi">Science Fiction</label><br />
+          <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy" />
+          <label htmlFor="wd-chkbox-fantasy">Fantasy</label>
+
+          <h4 id="wd-dropdowns">Dropdowns</h4>
+          <h5>Select one</h5>
+          <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label><br />
+          <select id="wd-select-one-genre">
+            <option value="COMEDY">Comedy</option>
+            <option value="DRAMA">Drama</option>
+            <option value="SCIFI" selected>Science Fiction</option>
+            <option value="FANTASY">Fantasy</option>
+          </select>
+
+          <h5>Select many</h5>
+          <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label><br />
+          <select multiple id="wd-select-many-genre">
+            <option value="COMEDY" selected> Comedy          </option>
+            <option value="DRAMA">           Drama           </option>
+            <option value="SCIFI" selected> Science Fiction </option>
+            <option value="FANTASY">         Fantasy         </option>
+          </select>
+          <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
         </form>
+        <button type="submit" form="form1" value="Submit">Submit</button>
       </div>
-
-
-      <h5>Text boxes</h5>
-      <label>Biography:</label><br />
-      <textarea id="wd-textarea" cols={30} rows={10}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-        est laborum.
-      </textarea>
-
-
-      <h5 id="wd-buttons">Buttons</h5>
-      <button type="button"
-        onClick={() => alert("Life is Good!")}
-        id="wd-all-good">
-        Hello World!
-      </button>
-
-
-      <h5 id="wd-radio-buttons">Radio buttons</h5>
-      <label>Favorite movie genre:</label><br />
-
-      <input type="radio" name="radio-genre" id="wd-radio-comedy" />
-      <label htmlFor="wd-radio-comedy">Comedy</label><br />
-
-      <input type="radio" name="radio-genre" id="wd-radio-drama" />
-      <label htmlFor="wd-radio-drama">Drama</label><br />
-
-      <input type="radio" name="radio-genre" id="wd-radio-scifi" />
-      <label htmlFor="wd-radio-scifi">Science Fiction</label><br />
-
-      <input type="radio" name="radio-genre" id="wd-radio-fantasy" />
-      <label htmlFor="wd-radio-fantasy">Fantasy</label>
-
-
-      <h5 id="wd-checkboxes">Checkboxes</h5>
-      <label>Favorite movie genre:</label><br />
-
-      <input type="checkbox" name="check-genre" id="wd-chkbox-comedy" />
-      <label htmlFor="wd-chkbox-comedy">Comedy</label><br />
-
-      <input type="checkbox" name="check-genre" id="wd-chkbox-drama" />
-      <label htmlFor="wd-chkbox-drama">Drama</label><br />
-
-      <input type="checkbox" name="check-genre" id="wd-chkbox-scifi" />
-      <label htmlFor="wd-chkbox-scifi">Science Fiction</label><br />
-
-      <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy" />
-      <label htmlFor="wd-chkbox-fantasy">Fantasy</label>
-
-
-      <h4 id="wd-dropdowns">Dropdowns</h4>
-      <h5>Select one</h5>
-      <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label><br />
-      <select id="wd-select-one-genre">
-        <option value="COMEDY">Comedy</option>
-        <option value="DRAMA">Drama</option>
-        <option value="SCIFI" selected>Science Fiction</option>
-        <option value="FANTASY">Fantasy</option>
-      </select>
-
-      <h5>Select many</h5>
-      <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label><br />
-      <select multiple id="wd-select-many-genre">
-        <option value="COMEDY" selected> Comedy          </option>
-        <option value="DRAMA">           Drama           </option>
-        <option value="SCIFI" selected> Science Fiction </option>
-        <option value="FANTASY">         Fantasy         </option>
-      </select>
-      <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
 
 
       <div id="wd-forms">
@@ -272,18 +301,17 @@ export default function Lab1() {
           <input type="date"
             value="2000-01-21"
             id="wd-text-fields-dob" /><br />
-        </form>
+        </form><br />
+        <button type="submit" form="form2" value="Submit">Submit</button>
       </div>
 
-
-      <h4>Anchor tag</h4>
-      Please 
-      <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
-      to get dummy text<br />
-
-      Please
-      <a href="https://github.com/rajgupta2965/kambaz-react-web-app" id="wd-github">click here</a>
-      to access my source code repository on GitHub<br />
+      <div id="wd-anchor">
+        <h4>Anchor tag</h4>
+        Please <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
+        to get dummy text<br />
+        Please <a href="https://github.com/rajgupta2965/kambaz-react-web-app" id="wd-github">click here</a>
+        to access my source code repository on GitHub<br />
+      </div>
 
     </div>
   );
