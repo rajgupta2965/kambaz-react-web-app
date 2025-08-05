@@ -6,6 +6,11 @@ import Lab3 from "./Lab3";
 export default function Labs() {
   return (
     <div>
+      <h2>Name: Raj Gupta <br />
+        Course: CS5610 Web Development <br />
+        Section: 01 | CRN: 60924 | Online<br />
+      </h2>
+
       <h1>Labs</h1>
       <TOC />
       <Routes>
@@ -15,5 +20,6 @@ export default function Labs() {
         <Route path="Lab3/*" element={<Lab3 />} />
       </Routes>
     </div>
-);}
+  );
+}
 
