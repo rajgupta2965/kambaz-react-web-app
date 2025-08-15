@@ -1,30 +1,57 @@
-export default function Projects() {
-return (
-<div id="wd-assignments">
-    <h3 id="wd-assignments-title">
-        PROJECT 30% of Total <button>+</button> </h3>
+import { Button, ListGroup, Row, Col, Container } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
+import { GrDocumentText } from "react-icons/gr";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { Link } from "react-router";
+import LessonControlButtons from "../LessonControlButtons";
+import AssignmentControlButtons from "./AssignmentControlButtons";
+import AssignmentControls from "./AssignmentsControls";
 
-    <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-            <a href="#/Kambaz/Courses/1234/Assignments/123"
-                className="wd-assignment-link" >
-                P1 - PORTFOLIO WEBSITE
-            </a><br />
-            <span className="wd-assignment-list-item">
-                Make a Portfolio Website | Date: May 16 at 2:00pm | 100pts <br />
-            </span>
-        </li>
-        <li className="wd-assignment-list-item">
-            <a href="#/Kambaz/Courses/1234/Assignments/123"
-                className="wd-assignment-link" >
-                P2 - KAMBAZ WEBSITE
-            </a><br />
-            <span className="wd-assignment-list-item">
-                Make the complete Kambaz Website | Date: May 30 at 2:00pm | 100pts <br />
-            </span>
-        </li>
-    </ul>
+export default function Quizzes() {
+	return (
+		<Container className="m-2">
+			<div id="wd-assignments">
+				<AssignmentControls /><br /><br />
 
-</div>
-);
+				<ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
+					<div className="wd-title p-3 ps-2 bg-secondary">
+						<BsGripVertical className="fs-3" /> <IoMdArrowDropdown className="me-2 fs-3" />
+						PROJECTS
+						<AssignmentControlButtons />
+						<Button variant="secondary" size="sm" className="me-2 float-end" active>30% of Total</Button>
+					</div>
+					<ListGroup className="wd-lessons rounded-0">
+						<ListGroup.Item className="wd-lesson p-3 ps-1">
+							<Row className="align-items-center text-nowrap gx-3">
+								<Col xs="auto" className="d-flex align-items-center"><BsGripVertical className="me-2 fs-3" /><GrDocumentText className="fs-3 text-success" /></Col>
+								<Col className="text-start overflow-hidden" style={{ minWidth: 0 }}>
+									<Link to="/Kambaz/Courses/1234/Assignments/123"
+										className="fw-semibold text-truncate d-block text-dark text-decoration-none">
+										P1
+									</Link>
+									<p className="mb-0 text-truncate small"> Make <span className="text-danger">Portfolio Website</span> | Date: May 16 at 2:00pm | 100pts <br />
+									</p>
+								</Col>
+								<Col xs="auto" className="d-flex justify-content-end align-items-center"><LessonControlButtons /></Col>
+							</Row>
+						</ListGroup.Item>
+						<ListGroup.Item className="wd-lesson p-3 ps-1">
+							<Row className="align-items-center text-nowrap gx-3">
+								<Col xs="auto" className="d-flex align-items-center"><BsGripVertical className="me-2 fs-3" /><GrDocumentText className="fs-3 text-success" /></Col>
+								<Col className="text-start overflow-hidden" style={{ minWidth: 0 }}>
+									<Link to="/Kambaz/Courses/1234/Assignments/123"
+										className="fw-semibold text-truncate d-block text-dark text-decoration-none">
+										P2
+									</Link>
+									<p className="mb-0 text-truncate small">Make <span className="text-danger">Kambaz Website</span> | Date: May 30 at 2:00pm | 100pts <br />
+									</p>
+								</Col>
+								<Col xs="auto" className="d-flex justify-content-end align-items-center"><LessonControlButtons /></Col>
+							</Row>
+						</ListGroup.Item>
+					</ListGroup>
+				</ListGroup.Item>
+			</div>
+		</Container>
+	);
 }
