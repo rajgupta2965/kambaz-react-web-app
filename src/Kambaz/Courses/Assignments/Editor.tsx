@@ -1,47 +1,59 @@
 import { Form, Row, Col, Card, Button, FormControl, FormSelect, Container } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { assignments } from "../../Database";
 
 export default function AssignmentEditor() {
+	const { courseId, cid, assignmentId, aid } = useParams();
+	const currentCourseId = courseId ?? cid ?? "";
+	const currentAssignmentId = assignmentId ?? aid ?? "";
+
+	const item = assignments.find(
+		(a) => a.course === currentCourseId && a._id === currentAssignmentId
+	);
+
 	return (
 		<Container className="m-2">
-			<Form action="#/Kambaz/Courses/1234/Assignments" id="wd-assignments-editor">
+			<Form>
 				<Form.Group className="mb-3">
 					<Form.Label className="h5 mb-2">Assignment Name</Form.Label>
-					<FormControl defaultValue="A1" size="lg" />
+					<FormControl defaultValue={item?.title ?? "Assignment"} size="lg" />
 				</Form.Group>
+
 				<Card className="mb-4 border-secondary-subtle">
 					<Card.Body className="pt-3">
 						<p className="mb-2">
-							The assignment is <span className="text-danger">available online</span>
+							This <b>{item?.type}</b> (<b>{item?.title}</b>) for course <b>{item?.course} </b>
+							is worth <b>{item?.points} points</b>.
 						</p>
 						<p className="mb-2">
-							Submit a link to the landing page of your Web application running on
-							Netlify.
+							It will be available from <b>{item?.startDate} </b>
+							until <b> {item?.endDate}</b>.
 						</p>
-						<p className="mb-2">The landing page should include the following:</p>
+						<p className="mb-2">
+							Submit a link to the landing page of your Web application running on Netlify: <br />
+							<a>https://rajgupta-webdev2025.netlify.app/</a>
+						</p>
+					
 						<ul className="mb-0">
-							<li>Your full name and section</li>
-							<li>Links to each of the lab assignments</li>
-							<li>Link to the Kambaz application</li>
-							<li>Links to all relevant source code repositories</li>
+							<li>Name: Raj Gupta</li>
+							<li>Course: CS5610 Web Development</li>
+							<li>Section: 01 | CRN: 60924 | Online</li>
 						</ul>
-						<p className="mt-3 mb-0">
-							The Kambaz application should include a link to navigate back to the
-							landing page.
-						</p>
 					</Card.Body>
 				</Card>
 
 				<Row className="g-3 mb-4">
 					<Col md={4}>
 						<Form.Label>Points</Form.Label>
-						<FormControl defaultValue={100} />
+						<FormControl defaultValue={item?.points ?? "Assignment"} />
 					</Col>
 					<Col md={4}>
 						<Form.Label>Assignment Group</Form.Label>
-						<FormSelect defaultValue="ASSIGNMENTS">
-							<option value="ASSIGNMENTS">Assignments</option>
-							<option value="QUIZZES">Quizzes</option>
-							<option value="EXAMS">Exams</option>
+						<FormSelect defaultValue={item?.type ?? "assignment"}>
+							<option value="assignment">Assignments</option>
+							<option value="quiz">Quizzes</option>
+							<option value="exam">Exams</option>
+							<option value="project">Projects</option>
 						</FormSelect>
 					</Col>
 					<Col md={4}>
@@ -81,37 +93,40 @@ export default function AssignmentEditor() {
 										<Form.Label>Due</Form.Label>
 										<FormControl
 											type="datetime-local"
-											defaultValue="2024-05-13T23:59"
+											defaultValue={item?.endDate ?? ""}
 										/>
 									</Col>
 									<Col sm={6}>
 										<Form.Label>Available from</Form.Label>
 										<FormControl
 											type="datetime-local"
-											defaultValue="2024-05-06T00:00"
+											defaultValue={item?.startDate ?? ""}
 										/>
 									</Col>
 									<Col sm={6}>
 										<Form.Label>Until</Form.Label>
 										<FormControl
 											type="datetime-local"
-											defaultValue="2024-05-20T00:00"
+											defaultValue={item?.endDate ?? ""}
 										/>
 									</Col>
 								</Row>
 							</Card.Body>
 						</Card>
 					</Col>
-
 				</Row>
 
 				<div className="d-flex justify-content-end gap-2">
-					<Button variant="secondary" type="button">
-						Cancel
-					</Button>
-					<Button variant="danger" type="submit">
-						Save
-					</Button>
+					<Link to={`/Kambaz/Courses/${currentCourseId}/Assignments`}>
+						<Button variant="secondary" type="button">
+							Cancel
+						</Button>
+					</Link>
+					<Link to={`/Kambaz/Courses/${currentCourseId}/Assignments`}>
+						<Button variant="danger" type="button">
+							Save
+						</Button>
+					</Link>
 				</div>
 			</Form>
 		</Container>

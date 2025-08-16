@@ -1,42 +1,18 @@
 import Nav from "react-bootstrap/Nav";
-import { Link, useLocation } from "react-router-dom";
-
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 export default function TOC() {
-  const location = useLocation();
-
+  const { pathname } = useLocation();
   return (
-    <Nav variant="pills">
-      <Nav.Item>
-        <Nav.Link as={Link} to="/Labs" active={location.pathname === "/Labs"}>
-          Labs
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={Link} to="/Labs/Lab1" active={location.pathname === "/Labs/Lab1"}>
-          Lab 1
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={Link} to="/Labs/Lab2" active={location.pathname === "/Labs/Lab2"}>
-          Lab 2
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={Link} to="/Labs/Lab3" active={location.pathname === "/Labs/Lab3"}>
-          Lab 3
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={Link} to="/Kambaz" active={location.pathname === "/Kambaz"}>
-          Kambaz
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link
-          href="https://github.com/rajgupta2965/kambaz-react-web-app" id="wd-github" target="_blank">
-          My GitHub
-        </Nav.Link>
-      </Nav.Item>
+    <Nav variant="pills" id="wd-toc">
+      <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab1" id="wd-a1"
+          active={pathname.includes("Lab1")}> Lab 1 </Nav.Link> </Nav.Item>
+      <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab2" id="wd-a2"
+          active={pathname.includes("Lab2")}> Lab 2 </Nav.Link> </Nav.Item>
+      <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab3" id="wd-a3"
+          active={pathname.includes("Lab3")}> Lab 3 </Nav.Link> </Nav.Item>
+      <Nav.Item> <Nav.Link as={Link} to="/Kambaz" id="wd-a3"> Kambaz </Nav.Link> </Nav.Item>
+      <Nav.Item> <Nav.Link href="https://github.com/rajgupta2965/kambaz-react-web-app" target="_blank"> My GitHub </Nav.Link> </Nav.Item>
     </Nav>
   );
 }

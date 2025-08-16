@@ -1,5 +1,5 @@
 import { FaPlus } from "react-icons/fa6";
-import GreenCheckmark from "../GreenCheckmark";
+import GreenCheckmark from "./GreenCheckmark";
 import { Button, Dropdown } from "react-bootstrap";
 export default function ModulesControls() {
   return (

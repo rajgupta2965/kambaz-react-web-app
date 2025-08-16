@@ -17,7 +17,6 @@ export default function Lab1() {
         is the largest heading and h6 is the smallest heading.
       </div>
 
-      {/* do the next exercise here */}
       <div id="wd-p-tag">
         <h4>Paragraph Tag</h4>
         <p id="wd-p-1">
@@ -205,7 +204,6 @@ export default function Lab1() {
             title="The last name"
             id="wd-text-fields-last-name" /> <br />
 
-          {/* copy rest of form elements here  */}
           <label htmlFor="wd-text-fields-hint">Hint: </label>
           <input type="text" placeholder="hint" title="tooltip"
             value="COMEDY" />

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Account from "./Account";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
@@ -13,7 +13,7 @@ export default function Kambaz() {
 			<KambazNavigation />
 			<div className="wd-main-content-offset p-3">
 				<Routes>
-					<Route path="/" element={<Navigate to="/Kambaz/Account" />} />
+					<Route path="/" element={<Navigate to="Account" />} />
 					<Route path="/Account/*" element={<Account />} />
 					<Route path="/Dashboard" element={<Dashboard />} />
 					<Route path="/Courses/:cid/*" element={<Courses />} />
