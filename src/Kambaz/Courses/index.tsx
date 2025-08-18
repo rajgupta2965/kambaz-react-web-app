@@ -11,12 +11,14 @@ import { Navigate, Route, Routes, useParams, useLocation } from "react-router-do
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
 import { Container } from "react-bootstrap";
-import { courses } from "../Database";
+import { useSelector } from "react-redux";
 
 export default function Courses() {
   const { cid } = useParams();
-  const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
+  const { courses } = useSelector((s: any) => s.coursesReducer);
+  const course = courses.find((c: any) => c._id === cid);
+
   return (
     <Container className="m-2">
       <div id="wd-courses">
