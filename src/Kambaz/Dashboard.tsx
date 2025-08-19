@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import ShowIfFaculty from "./auth/showIfFaculty";
+import ShowIfFaculty from "./auth/ShowIfFaculty";
 import { useState } from "react";
 
 import { addCourse, deleteCourse, updateCourse, enroll, unenroll } from "./Courses/reducer";

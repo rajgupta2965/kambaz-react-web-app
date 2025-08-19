@@ -1,5 +1,5 @@
 import React from "react";
-import useIsFaculty from "./userIsFaculty";
+import useIsFaculty from "./useIsFaculty";
 
 type Props = { children: React.ReactNode };
 

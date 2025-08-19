@@ -3,7 +3,7 @@ import GreenCheckmark from "../GreenCheckmark";
 import { BsPlus } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
-import ShowIfFaculty from "../../auth/showIfFaculty";
+import ShowIfFaculty from "../../auth/ShowIfFaculty";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ModuleEditor from "./ModuleEditor";

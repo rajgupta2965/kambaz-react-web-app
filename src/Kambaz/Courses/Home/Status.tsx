@@ -6,7 +6,7 @@ import { Button, Container } from "react-bootstrap";
 import { IoMdHome } from "react-icons/io";
 import { RiBarChart2Fill } from "react-icons/ri";
 import { GrAnnounce } from "react-icons/gr";
-import ShowIfFaculty from "../../auth/showIfFaculty";
+import ShowIfFaculty from "../../auth/ShowIfFaculty";
 
 export default function CourseStatus() {
 	return (

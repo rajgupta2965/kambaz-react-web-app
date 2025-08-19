@@ -1,6 +1,6 @@
 import { Form, Row, Col, Card, Button, FormControl, FormSelect, Container } from "react-bootstrap";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import useIsFaculty from "../../auth/userIsFaculty";
+import useIsFaculty from "../../auth/useIsFaculty";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";

@@ -2,7 +2,7 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import GreenCheckmark from "../GreenCheckmark";
 import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
-import ShowIfFaculty from "../../auth/showIfFaculty";
+import ShowIfFaculty from "../../auth/ShowIfFaculty";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ModuleEditor from "./ModuleEditor";

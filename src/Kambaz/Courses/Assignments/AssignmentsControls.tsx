@@ -1,7 +1,7 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
-import ShowIfFaculty from "../../auth/showIfFaculty";
+import ShowIfFaculty from "../../auth/ShowIfFaculty";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function AssignmentControls() {

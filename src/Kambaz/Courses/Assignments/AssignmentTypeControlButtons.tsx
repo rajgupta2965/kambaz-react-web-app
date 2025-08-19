@@ -1,6 +1,6 @@
 import { IoEllipsisVertical } from "react-icons/io5";
 import { BsPlus } from "react-icons/bs";
-import ShowIfFaculty from "../../auth/showIfFaculty";
+import ShowIfFaculty from "../../auth/ShowIfFaculty";
 import { useNavigate, useParams } from "react-router-dom";
 
 type AssignType = "Assignment" | "Quiz" | "Exam" | "Project";

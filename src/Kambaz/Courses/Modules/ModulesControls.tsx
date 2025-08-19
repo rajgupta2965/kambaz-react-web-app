@@ -3,7 +3,7 @@ import GreenCheckmark from "../GreenCheckmark";
 import { Button, Dropdown } from "react-bootstrap";
 import ModuleEditor from "./ModuleEditor";
 import { useState } from "react";
-import ShowIfFaculty from "../../auth/showIfFaculty";
+import ShowIfFaculty from "../../auth/ShowIfFaculty";
 
 export default function ModulesControls(
   { moduleName, setModuleName, addModule }:
