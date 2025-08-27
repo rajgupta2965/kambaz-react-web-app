@@ -3,44 +3,45 @@ import GreenCheckmark from "../GreenCheckmark";
 import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import ShowIfFaculty from "../../auth/ShowIfFaculty";
-
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ModuleEditor from "../Modules/ModuleEditor";
-import { updateAssignment, deleteAssignment } from "./reducer";
+import * as client from "./client";
+import { updateAssignment as updateAction, deleteAssignment as deleteAction } from "./reducer";
 
-export default function AssignmentControlButtons(
-  {
-    assignmentId,
-    initialTitle,
-  }: {
-    assignmentId?: string;
-    initialTitle?: string;
-  }
-) {
+export default function AssignmentControlButtons({
+  assignmentId,
+  initialTitle,
+}: {
+  assignmentId?: string;
+  initialTitle?: string;
+}) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [name, setName] = useState(initialTitle ?? "Assignment");
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!assignmentId) return;
-    dispatch(updateAssignment({ _id: assignmentId, title: name }));
+    await client.updateAssignment({ _id: assignmentId, title: name });
+    dispatch(updateAction({ _id: assignmentId, title: name }));
     handleClose();
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!assignmentId) return;
     if (!window.confirm("Remove this assignment?")) return;
-    dispatch(deleteAssignment(assignmentId));
+    await client.deleteAssignment(assignmentId);
+    dispatch(deleteAction(assignmentId));
   };
 
   return (
     <div className="float-end">
       <ShowIfFaculty>
         <FaPencil onClick={handleShow} className="text-primary me-3" />
-        <FaTrash className="text-danger me-3 mb" onClick={handleDelete} />
+        <FaTrash className="text-danger me-3" onClick={handleDelete} />
       </ShowIfFaculty>
 
       <GreenCheckmark />

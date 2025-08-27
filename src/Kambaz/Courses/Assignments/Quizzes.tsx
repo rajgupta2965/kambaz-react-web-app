@@ -7,15 +7,29 @@ import AssignmentControls from "./AssignmentsControls";
 import AssignmentTypeControlButtons from "./AssignmentTypeControlButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setAssignments } from "./reducer";
+import * as client from "./client";
 
 export default function Assignments() {
 	const { courseId, cid } = useParams();
 	const currentCourseId = courseId ?? cid ?? "";
 	const { assignments } = useSelector((s: any) => s.assignmentsReducer);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!currentCourseId) return;
+		client.findAssignmentsForCourse(currentCourseId).then((list) => {
+			dispatch(setAssignments(list));
+		});
+	}, [currentCourseId, dispatch]);
+
 	const courseQuizzes = assignments.filter(
 		(a: any) => a.course === currentCourseId && a.assignType === "Quiz"
 	);
+
 	const [showQuizzes, setShowQuizzes] = useState(true);
 
 	return (

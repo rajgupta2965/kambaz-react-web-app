@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ModuleEditor from "./ModuleEditor";
 import { addLessonToModule } from "./reducer";
+import * as modulesClient from "./client";
 
 export default function ModuleControlButtons(
   { moduleId, deleteModule, editModule }: {
@@ -27,11 +28,14 @@ export default function ModuleControlButtons(
 
   const handleShow = () => setShow(true);
 
-  const handleAddLesson = () => {
-    dispatch(addLessonToModule({ moduleId, name: lessonName }));
+  const handleAddLesson = async () => {
+    if (!lessonName.trim()) return;
+    const created = await modulesClient.createLessonForModule(moduleId, {
+      name: lessonName.trim(),
+    });
+    dispatch(addLessonToModule({ moduleId, lesson: created }));
     handleClose();
   };
-
   const handleDeleteModule = () => {
     if (!window.confirm("Remove this module and its lessons?")) return;
     deleteModule(moduleId);

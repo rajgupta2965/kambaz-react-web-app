@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { modules } from "../../Database";
 import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
-  modules: modules,
+  modules: [],
 };
 
 const modulesSlice = createSlice({
   name: "modules",
   initialState,
   reducers: {
+    setModules: (state, action) => {
+      state.modules = action.payload;
+    },
     addModule: (state, { payload: module }) => {
       const newModule: any = {
         _id: uuidv4(),
@@ -34,18 +36,26 @@ const modulesSlice = createSlice({
         m._id === moduleId ? { ...m, editing: true } : m
       ) as any;
     },
+
     addLessonToModule: (state, { payload }) => {
-      const { moduleId, name } = payload as { moduleId: string; name?: string };
+      const { moduleId, lesson, name } = payload as {
+        moduleId: string;
+        lesson?: { _id: string; name: string; description?: string; module: string };
+        name?: string;
+      };
       const mod: any = state.modules.find((m: any) => m._id === moduleId);
       if (!mod) return;
-      const newLesson = {
-        _id: uuidv4(),
-        name: (name && name.trim()) || "New Lesson",
-        description: "",
-        module: moduleId,
-      };
       if (!Array.isArray(mod.lessons)) mod.lessons = [];
-      mod.lessons.push(newLesson);
+      if (lesson && lesson._id) {
+        mod.lessons.push(lesson);
+      } else {
+        mod.lessons.push({
+          _id: crypto.randomUUID?.() ?? String(Date.now()),
+          name: (name && name.trim()) || "New Lesson",
+          description: "",
+          module: moduleId,
+        });
+      }
     },
     updateLesson: (state, { payload }: { payload: { moduleId: string; lessonId: string; name?: string; description?: string } }) => {
       const { moduleId, lessonId, name, description } = payload;
@@ -71,7 +81,8 @@ export const {
   editModule,
   addLessonToModule,
   updateLesson,
-  deleteLesson,  
+  deleteLesson,
+  setModules,
 } = modulesSlice.actions;
 
 export default modulesSlice.reducer;

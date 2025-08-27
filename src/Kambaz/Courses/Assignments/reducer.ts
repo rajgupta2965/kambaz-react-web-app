@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { assignments as dbAssignments } from "../../Database";
 import { v4 as uuidv4 } from "uuid";
 
 export type Assignment = {
@@ -22,13 +21,17 @@ const cap = (s?: string) =>
   (s ?? "Assignment").toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
 
 const initialState: { assignments: Assignment[] } = {
-  assignments: dbAssignments as Assignment[],
+  assignments: [],
 };
 
 const assignmentsSlice = createSlice({
   name: "assignments",
   initialState,
   reducers: {
+    setAssignments: (state, { payload }) => {
+      state.assignments = payload;
+    },
+
     addAssignment: (state, { payload }) => {
       const newAssignment: Assignment = {
         _id: uuidv4(),
@@ -50,12 +53,12 @@ const assignmentsSlice = createSlice({
       state.assignments = state.assignments.map((a) =>
         a._id === payload._id
           ? {
-              ...a,
-              ...payload,
-              assignType: payload.assignType
-                ? (cap(payload.assignType) as Assignment["assignType"])
-                : a.assignType,
-            }
+            ...a,
+            ...payload,
+            assignType: payload.assignType
+              ? (cap(payload.assignType) as Assignment["assignType"])
+              : a.assignType,
+          }
           : a
       );
     },
@@ -79,6 +82,7 @@ const assignmentsSlice = createSlice({
 });
 
 export const {
+  setAssignments,
   addAssignment,
   updateAssignment,
   deleteAssignment,
