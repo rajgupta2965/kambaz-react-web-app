@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ModuleEditor from "./ModuleEditor";
 import { updateLesson, deleteLesson } from "./reducer";
+import * as modulesClient from "./client";
 
 export default function LessonControlButtons(
   {
@@ -25,13 +26,14 @@ export default function LessonControlButtons(
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    await modulesClient.updateLessonById(lessonId, { name: lessonName });
     dispatch(updateLesson({ moduleId, lessonId, name: lessonName }));
     handleClose();
   };
-
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!window.confirm("Remove this lesson?")) return;
+    await modulesClient.deleteLessonById(lessonId);
     dispatch(deleteLesson({ moduleId, lessonId }));
   };
 

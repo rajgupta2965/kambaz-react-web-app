@@ -4,7 +4,8 @@ import useIsFaculty from "../../auth/useIsFaculty";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { updateAssignment, addAssignment } from "./reducer";
+import * as client from "./client";
+import { setAssignments, updateAssignment as updateAction, addAssignment as addAction } from "./reducer";
 
 export default function AssignmentEditor() {
   const { courseId, cid, assignmentId, aid } = useParams();
@@ -42,29 +43,28 @@ export default function AssignmentEditor() {
     item?.assignType ?? cap(incomingType || "Assignment")
   );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isFaculty) return;
     const endDate = (dueDate && dueDate.trim()) ? dueDate : (untilDate?.trim() || "");
     const assignTypeFinal = cap(assignType);
     const base = {
       course: currentCourseId,
-      title,
-      desc,
+      title, desc,
       points: clamp100(Number(points) || 0),
       assignType: assignTypeFinal,
-      grade,
-      submissionType,
-      assignTo,
-      startDate,
-      endDate,
+      grade, submissionType, assignTo,
+      startDate, endDate,
     };
-    const isNew = !item || currentAssignmentId === "" || currentAssignmentId === "new";
-    if (isNew) {
-      dispatch(addAssignment(base));
+    if (item) {
+      await client.updateAssignment({ ...base, _id: currentAssignmentId });
+      dispatch(updateAction({ ...base, _id: currentAssignmentId }));
     } else {
-      dispatch(updateAssignment({ _id: currentAssignmentId, ...base }));
+      const created = await client.createAssignment(currentCourseId, base);
+      dispatch(addAction(created));
     }
+    const fresh = await client.findAssignmentsForCourse(currentCourseId);
+    dispatch(setAssignments(fresh));
     navigate(`/Kambaz/Courses/${currentCourseId}/Assignments`);
   };
 
