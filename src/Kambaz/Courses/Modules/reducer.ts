@@ -1,88 +1,110 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+type Lesson = { _id: string; name: string; description?: string; module?: string };
+type Module = {
+  editing?: boolean;
+  _id: string;
+  name: string;
+  description?: string;
+  course: string;
+  lessons?: Lesson[];
+};
+
+type ModulesState = {
+  modules: Module[];
+};
+
+const initialState: ModulesState = {
   modules: [],
 };
+
+const findModuleIndex = (state: ModulesState, moduleId: string) =>
+  state.modules.findIndex((m) => m._id === moduleId);
+
+const findLessonIndex = (mod: Module, lessonId: string) =>
+  (mod.lessons ?? []).findIndex((l) => l._id === lessonId);
 
 const modulesSlice = createSlice({
   name: "modules",
   initialState,
   reducers: {
-    setModules: (state, action) => {
-      state.modules = action.payload;
+    setModules: (state, { payload }: PayloadAction<Module[]>) => {
+      state.modules = payload ?? [];
     },
-    addModule: (state, { payload: module }) => {
-      const newModule: any = {
-        _id: uuidv4(),
-        lessons: [],
-        name: module.name,
-        course: module.course,
-      };
-      state.modules = [...state.modules, newModule] as any;
+    addModule: (state, { payload }: PayloadAction<Module>) => {
+      state.modules = [{ ...payload, lessons: payload.lessons ?? [] }, ...state.modules];
     },
-    deleteModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.filter(
-        (m: any) => m._id !== moduleId
-      );
+    editModule: (state, { payload }: PayloadAction<string>) => {
+      const i = findModuleIndex(state, payload);
+      if (i >= 0) state.modules[i].editing = true;
     },
-    updateModule: (state, { payload: module }) => {
-      state.modules = state.modules.map((m: any) =>
-        m._id === module._id ? module : m
-      ) as any;
+    updateModule: (state, { payload }: PayloadAction<Module>) => {
+      const i = findModuleIndex(state, payload._id);
+      if (i >= 0) state.modules[i] = { ...state.modules[i], ...payload };
     },
-    editModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.map((m: any) =>
-        m._id === moduleId ? { ...m, editing: true } : m
-      ) as any;
+    deleteModule: (state, { payload }: PayloadAction<string>) => {
+      state.modules = state.modules.filter((m) => m._id !== payload);
     },
 
-    addLessonToModule: (state, { payload }) => {
-      const { moduleId, lesson, name } = payload as {
-        moduleId: string;
-        lesson?: { _id: string; name: string; description?: string; module: string };
-        name?: string;
-      };
-      const mod: any = state.modules.find((m: any) => m._id === moduleId);
-      if (!mod) return;
-      if (!Array.isArray(mod.lessons)) mod.lessons = [];
-      if (lesson && lesson._id) {
-        mod.lessons.push(lesson);
-      } else {
-        mod.lessons.push({
-          _id: crypto.randomUUID?.() ?? String(Date.now()),
-          name: (name && name.trim()) || "New Lesson",
-          description: "",
-          module: moduleId,
-        });
+    setLessonsForModule: (
+      state,
+      { payload }: PayloadAction<{ moduleId: string; lessons: Lesson[] }>
+    ) => {
+      const { moduleId, lessons } = payload;
+      const i = findModuleIndex(state, moduleId);
+      if (i >= 0) state.modules[i].lessons = lessons ?? [];
+    },
+    addLessonToModule: (
+      state,
+      { payload }: PayloadAction<{ moduleId: string; lesson: Lesson }>
+    ) => {
+      const { moduleId, lesson } = payload;
+      const i = findModuleIndex(state, moduleId);
+      if (i >= 0) {
+        const list = state.modules[i].lessons ?? [];
+        state.modules[i].lessons = [...list, lesson];
       }
     },
-    updateLesson: (state, { payload }: { payload: { moduleId: string; lessonId: string; name?: string; description?: string } }) => {
-      const { moduleId, lessonId, name, description } = payload;
-      const mod: any = state.modules.find((m: any) => m._id === moduleId);
-      if (!mod || !Array.isArray(mod.lessons)) return;
-      mod.lessons = mod.lessons.map((l: any) =>
-        l._id === lessonId ? { ...l, ...(name != null ? { name } : {}), ...(description != null ? { description } : {}) } : l
-      );
+    updateLesson: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{ moduleId: string; lessonId: string; name?: string; description?: string }>
+    ) => {
+      const { moduleId, lessonId, ...patch } = payload;
+      const i = findModuleIndex(state, moduleId);
+      if (i >= 0) {
+        const j = findLessonIndex(state.modules[i], lessonId);
+        if (j >= 0) {
+          state.modules[i].lessons![j] = { ...state.modules[i].lessons![j], ...patch };
+        }
+      }
     },
-    deleteLesson: (state, { payload }: { payload: { moduleId: string; lessonId: string } }) => {
+    deleteLesson: (
+      state,
+      { payload }: PayloadAction<{ moduleId: string; lessonId: string }>
+    ) => {
       const { moduleId, lessonId } = payload;
-      const mod: any = state.modules.find((m: any) => m._id === moduleId);
-      if (!mod || !Array.isArray(mod.lessons)) return;
-      mod.lessons = mod.lessons.filter((l: any) => l._id !== lessonId);
+      const i = findModuleIndex(state, moduleId);
+      if (i >= 0) {
+        state.modules[i].lessons = (state.modules[i].lessons ?? []).filter(
+          (l) => l._id !== lessonId
+        );
+      }
     },
   },
 });
 
 export const {
+  setModules,
   addModule,
-  deleteModule,
-  updateModule,
   editModule,
+  updateModule,
+  deleteModule,
+  setLessonsForModule,
   addLessonToModule,
   updateLesson,
   deleteLesson,
-  setModules,
 } = modulesSlice.actions;
 
 export default modulesSlice.reducer;

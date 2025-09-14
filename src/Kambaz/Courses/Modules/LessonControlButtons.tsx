@@ -27,13 +27,13 @@ export default function LessonControlButtons(
   const handleShow = () => setShow(true);
 
   const handleSave = async () => {
-    await modulesClient.updateLessonById(lessonId, { name: lessonName });
+    await modulesClient.updateLesson(moduleId, lessonId, { name: lessonName });
     dispatch(updateLesson({ moduleId, lessonId, name: lessonName }));
     handleClose();
   };
   const handleDelete = async () => {
     if (!window.confirm("Remove this lesson?")) return;
-    await modulesClient.deleteLessonById(lessonId);
+    await modulesClient.deleteLesson(moduleId, lessonId);
     dispatch(deleteLesson({ moduleId, lessonId }));
   };
 

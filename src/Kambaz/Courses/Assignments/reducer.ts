@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 export type Assignment = {
   _id: string;
@@ -29,50 +28,32 @@ const assignmentsSlice = createSlice({
   initialState,
   reducers: {
     setAssignments: (state, { payload }) => {
-      state.assignments = payload;
+      state.assignments = payload ?? [];
     },
-
     addAssignment: (state, { payload }) => {
-      const newAssignment: Assignment = {
-        _id: uuidv4(),
-        course: payload.course,
-        title: payload.title ?? "New Assignment",
-        desc: payload.desc ?? "",
-        points: typeof payload.points === "number" ? payload.points : 100,
-        assignType: cap(payload.assignType) as Assignment["assignType"],
-        grade: payload.grade ?? "Grade",
-        submissionType: payload.submissionType ?? "Online",
-        assignTo: payload.assignTo ?? "Everyone",
-        startDate: payload.startDate ?? "",
-        endDate: payload.endDate ?? "",
-      };
-      state.assignments = [...state.assignments, newAssignment];
+      state.assignments = [...state.assignments, payload];
     },
-
     updateAssignment: (state, { payload }) => {
       state.assignments = state.assignments.map((a) =>
         a._id === payload._id
           ? {
-            ...a,
-            ...payload,
-            assignType: payload.assignType
-              ? (cap(payload.assignType) as Assignment["assignType"])
-              : a.assignType,
-          }
+              ...a,
+              ...payload,
+              assignType: payload.assignType
+                ? (cap(payload.assignType) as Assignment["assignType"])
+                : a.assignType,
+            }
           : a
       );
     },
-
     deleteAssignment: (state, { payload: assignmentId }) => {
       state.assignments = state.assignments.filter((a) => a._id !== assignmentId);
     },
-
     editAssignment: (state, { payload: assignmentId }) => {
       state.assignments = state.assignments.map((a) =>
         a._id === assignmentId ? { ...a, editing: true } : a
       );
     },
-
     cancelEditAssignment: (state, { payload: assignmentId }) => {
       state.assignments = state.assignments.map((a) =>
         a._id === assignmentId ? { ...a, editing: false } : a
