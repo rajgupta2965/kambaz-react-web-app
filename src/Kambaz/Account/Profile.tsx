@@ -87,7 +87,6 @@ export default function Profile() {
               value={profile.email ?? ""}
               onChange={(e) => setProfile({ ...profile, email: e.target.value })}
             />
-
             <select
               id="wd-role"
               className="form-control mb-2"

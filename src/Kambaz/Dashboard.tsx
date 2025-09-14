@@ -19,7 +19,7 @@ export default function Dashboard({ courses = [], allCourses = [], addNewCourse,
   const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "TA";
   const isStudent = currentUser?.role === "STUDENT";
   const isAdmin = currentUser?.role === "ADMIN";
-  const visibleCourses = (isFaculty || isAdmin) ? allCourses : (enrolling ? allCourses : courses);//////change
+  const visibleCourses = (isFaculty || isAdmin) ? allCourses : (enrolling ? allCourses : courses);
 
   const [course, setCourse] = useState<any>({
     _id: "new",
@@ -30,20 +30,6 @@ export default function Dashboard({ courses = [], allCourses = [], addNewCourse,
     description: "New Description",
     image: "reactjs.jpg",
   });
-
-  // const addCourse = async () => {
-  //   if (!addNewCourse) return;
-  //   await addNewCourse(course);
-  //   setCourse({
-  //     _id: "new",
-  //     name: "New Course",
-  //     number: "New Number",
-  //     startDate: "2023-09-10",
-  //     endDate: "2023-12-15",
-  //     description: "New Description",
-  //     image: "reactjs.jpg",
-  //   });
-  // };
 
   const addCourse = async () => {
     if (!addNewCourse) return;
@@ -81,7 +67,6 @@ export default function Dashboard({ courses = [], allCourses = [], addNewCourse,
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">
         Dashboard
-        {/* {!isFaculty //changeeeeee */}
         {isStudent && (
           <Button
             variant="primary"
@@ -129,7 +114,6 @@ export default function Dashboard({ courses = [], allCourses = [], addNewCourse,
       </ShowIfFaculty>
 
       <h2 id="wd-dashboard-published">
-        {/* {isFaculty           Change*/}
         {(isFaculty || isAdmin)
           ? `Published Courses (${allCourses.length})`
           : enrolling
@@ -185,7 +169,6 @@ export default function Dashboard({ courses = [], allCourses = [], addNewCourse,
 
                       <Button variant="primary" disabled={!isFaculty && !enrolled}> Go </Button>
 
-                      {/* {enrolling && ( */}
                       {isStudent && enrolling && (
                         <button
                           onClick={(event) => {

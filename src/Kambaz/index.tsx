@@ -53,7 +53,7 @@ export default function Kambaz() {
   const fetchCourses = async () => {
     try {
       const allCourses = await courseClient.fetchAllCourses();
-      setAllCourses(allCourses); ///////CHANGE
+      setAllCourses(allCourses);
       const enrolledCourses = await userClient.findCoursesForUser(
         currentUser._id
       );
@@ -71,7 +71,6 @@ export default function Kambaz() {
   };
   useEffect(() => {
     if (!currentUser) return;
-    ////////Change
     const isFaculty = currentUser.role === "FACULTY" || currentUser.role === "TA" || currentUser.role === "ADMIN";
     if (isFaculty || enrolling) {
       fetchCourses();
@@ -83,7 +82,7 @@ export default function Kambaz() {
   const addNewCourse = async (course: any) => {
     const newCourse = await courseClient.createCourse(course);
     setAllCourses((prev) => [...prev, newCourse]);
-    setCourses((prev) => [...prev, newCourse]); ///////change
+    setCourses((prev) => [...prev, newCourse]);
   };
 
   const updateCourse = async (updated: any) => {

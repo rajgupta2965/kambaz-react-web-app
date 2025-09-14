@@ -25,7 +25,6 @@ export default function ModuleControlButtons(
     setShow(false);
     setLessonName("");
   };
-
   const handleShow = () => setShow(true);
 
   const handleAddLesson = async () => {

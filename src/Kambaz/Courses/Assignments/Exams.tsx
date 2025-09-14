@@ -16,7 +16,6 @@ export default function Assignments() {
 	const { courseId, cid } = useParams();
 	const currentCourseId = courseId ?? cid ?? "";
 	const { assignments } = useSelector((s: any) => s.assignmentsReducer);
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -30,7 +29,6 @@ export default function Assignments() {
 		(a: any) => a.course === currentCourseId && a.assignType === "Exam"
 	);
 	const [showExams, setShowExams] = useState(true);
-	
 
 	return (
 		<Container className="m-2">
