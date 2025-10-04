@@ -16,12 +16,14 @@ import * as courseClient from "./Courses/client";
 export default function Kambaz() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const [courses, setCourses] = useState<any[]>([]);
+  const [coursesLoading, setCoursesLoading] = useState<boolean>(true);
   const [allCourses, setAllCourses] = useState<any[]>([]);
 
   function RequireEnrollment({ children }: { children: JSX.Element }) {
     const { cid } = useParams();
     const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "TA";
     const isEnrolled = !!cid && courses.some((c: any) => String(c._id) === String(cid));
+    if (!isFaculty && coursesLoading) { return <></>; }
     return isFaculty || isEnrolled ? children : <Navigate to="/Kambaz/Dashboard" replace />;
   }
 
@@ -33,7 +35,11 @@ export default function Kambaz() {
     } catch (error) {
       console.error(error);
     }
+    finally {
+      setCoursesLoading(false);
+    }
   };
+  
   const updateEnrollment = async (courseId: string, enrolled: boolean) => {
     if (enrolled) {
       await userClient.enrollIntoCourse(currentUser._id, courseId);
@@ -50,6 +56,7 @@ export default function Kambaz() {
       })
     );
   };
+
   const fetchCourses = async () => {
     try {
       const allCourses = await courseClient.fetchAllCourses();
@@ -67,8 +74,11 @@ export default function Kambaz() {
       setCourses(courses);
     } catch (error) {
       console.error(error);
-    }
+    } finally {
+     setCoursesLoading(false);
+   }
   };
+
   useEffect(() => {
     if (!currentUser) return;
     const isFaculty = currentUser.role === "FACULTY" || currentUser.role === "TA" || currentUser.role === "ADMIN";
