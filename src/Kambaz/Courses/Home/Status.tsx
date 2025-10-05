@@ -23,7 +23,9 @@ export default function CourseStatus() {
 						<Button variant="success" size="lg" className="w-100">
 							<FaCheckCircle className="me-2 fs-5" /> Publish </Button> </div>
 				</div>
-				</ShowIfFaculty><br />
+				</ShowIfFaculty>
+				
+				<br />
 				
 				<ShowIfFaculty>
 				<Button variant="secondary" size="lg" className="w-100 mt-1 text-start">

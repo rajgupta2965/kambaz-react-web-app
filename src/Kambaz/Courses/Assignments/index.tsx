@@ -16,6 +16,7 @@ export default function Assignments() {
 	const { courseId, cid } = useParams();
 	const currentCourseId = courseId ?? cid ?? "";
 	const { assignments } = useSelector((s: any) => s.assignmentsReducer);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {

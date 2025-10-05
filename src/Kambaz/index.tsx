@@ -10,100 +10,71 @@ import "./styles.css";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import { useEffect, useState, type JSX } from "react";
 import Session from "./Account/Session";
+import * as client from "./Courses/client";
 import * as userClient from "./Account/client";
 import * as courseClient from "./Courses/client";
 
 export default function Kambaz() {
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const [courses, setCourses] = useState<any[]>([]);
-  const [coursesLoading, setCoursesLoading] = useState<boolean>(true);
   const [allCourses, setAllCourses] = useState<any[]>([]);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   function RequireEnrollment({ children }: { children: JSX.Element }) {
     const { cid } = useParams();
-    const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "TA";
-    const isEnrolled = !!cid && courses.some((c: any) => String(c._id) === String(cid));
-    if (!isFaculty && coursesLoading) { return <></>; }
+    const isFaculty = currentUser?.role === "FACULTY";
+    const isEnrolled = !!cid && courses.some((c: any) => c._id === cid);
     return isFaculty || isEnrolled ? children : <Navigate to="/Kambaz/Dashboard" replace />;
   }
 
-  const [enrolling, setEnrolling] = useState<boolean>(false);
-  const findCoursesForUser = async () => {
-    try {
-      const courses = await userClient.findCoursesForUser(currentUser._id);
-      setCourses(courses);
-    } catch (error) {
-      console.error(error);
-    }
-    finally {
-      setCoursesLoading(false);
-    }
-  };
-  
-  const updateEnrollment = async (courseId: string, enrolled: boolean) => {
-    if (enrolled) {
-      await userClient.enrollIntoCourse(currentUser._id, courseId);
-    } else {
-      await userClient.unenrollFromCourse(currentUser._id, courseId);
-    }
-    setCourses(
-      courses.map((course) => {
-        if (course._id === courseId) {
-          return { ...course, enrolled: enrolled };
-        } else {
-          return course;
-        }
-      })
-    );
-  };
-
   const fetchCourses = async () => {
     try {
-      const allCourses = await courseClient.fetchAllCourses();
-      setAllCourses(allCourses);
-      const enrolledCourses = await userClient.findCoursesForUser(
-        currentUser._id
-      );
-      const courses = allCourses.map((course: any) => {
-        if (enrolledCourses.find((c: any) => c._id === course._id)) {
-          return { ...course, enrolled: true };
-        } else {
-          return course;
-        }
-      });
-      setCourses(courses);
+      const myCourses = await userClient.findMyCourses();
+      setCourses(Array.isArray(myCourses) ? myCourses : myCourses?.courses ?? []);
     } catch (error) {
       console.error(error);
-    } finally {
-     setCoursesLoading(false);
-   }
-  };
-
-  useEffect(() => {
-    if (!currentUser) return;
-    const isFaculty = currentUser.role === "FACULTY" || currentUser.role === "TA" || currentUser.role === "ADMIN";
-    if (isFaculty || enrolling) {
-      fetchCourses();
-    } else {
-      findCoursesForUser();
+      setCourses([]);
     }
-  }, [currentUser, enrolling]);
+  }; useEffect(() => { fetchCourses(); }, [currentUser?._id]);
 
-  const addNewCourse = async (course: any) => {
-    const newCourse = await courseClient.createCourse(course);
-    setAllCourses((prev) => [...prev, newCourse]);
+  const fetchAllCourses = async () => {
+    try {
+      const all = await client.findAllCourses();
+      setAllCourses(Array.isArray(all) ? all : all?.courses ?? []);
+    } catch (error) {
+      console.error(error);
+      setAllCourses([]);
+    }
+  }; useEffect(() => { fetchAllCourses(); }, [currentUser?._id]);
+
+  const handleAddCourse = async (course: any) => {
+    const newCourse = await userClient.createCourse(course);
     setCourses((prev) => [...prev, newCourse]);
+    setAllCourses((prev) => [...prev, newCourse]);
   };
 
-  const updateCourse = async (updated: any) => {
+  const handleDeleteCourse = async (courseId: string) => {
+    await courseClient.deleteCourse(courseId);
+    setCourses((prev) => prev.filter((c) => c._id !== courseId));
+    setAllCourses?.((prev) => prev.filter((c: any) => c._id !== courseId));
+  };
+
+  const handleUpdateCourse = async (updated: any) => {
     await courseClient.updateCourse(updated);
     setCourses((prev) => prev.map((c) => (c._id === updated._id ? updated : c)));
     setAllCourses((prev) => prev.map((c) => (c._id === updated._id ? updated : c)));
   };
 
-  const deleteCourse = async (courseId: string) => {
-    await courseClient.deleteCourse(courseId);
-    setAllCourses((prev) => prev.filter((c) => c._id !== courseId));
+  const handleEnroll = async (courseId: string) => {
+    const enrolledCourse = await userClient.enrollInCourse(courseId);
+    setCourses((prev) =>
+      prev.some((c) => c._id === enrolledCourse._id)
+        ? prev
+        : [...prev, enrolledCourse]
+    );
+  };
+
+  const handleUnenroll = async (courseId: string) => {
+    await userClient.unenrollFromCourse(courseId);
     setCourses((prev) => prev.filter((c) => c._id !== courseId));
   };
 
@@ -119,12 +90,11 @@ export default function Kambaz() {
               <Dashboard
                 courses={courses}
                 allCourses={allCourses}
-                addNewCourse={addNewCourse}
-                deleteCourse={deleteCourse}
-                updateCourse={updateCourse}
-                enrolling={enrolling}
-                setEnrolling={setEnrolling}
-                updateEnrollment={updateEnrollment}
+                onAddCourse={handleAddCourse}
+                onDeleteCourse={handleDeleteCourse}
+                onUpdateCourse={handleUpdateCourse}
+                onEnroll={handleEnroll}
+                onUnenroll={handleUnenroll}
               />
             </ProtectedRoute>} />
             <Route path="Courses/:cid/*" element={<ProtectedRoute><RequireEnrollment><Courses /></RequireEnrollment></ProtectedRoute>} />

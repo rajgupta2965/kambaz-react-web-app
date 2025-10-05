@@ -20,9 +20,12 @@ export default function Signup() {
         <h1>Sign up</h1>
         <Form.Control className="wd-username mb-2" placeholder="Username" 
         value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })}/>
+
         <Form.Control className="wd-password mb-2"  type="password" placeholder="Password" 
         value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })}/>
+
         <Form.Control className="wd-password-verify mb-3" type="password" placeholder="Verify Password"/>
+
         <Button onClick={signup} className="wd-signup-btn btn btn-primary w-100 mb-2">Sign up</Button>
         <Link to="/Kambaz/Account/Signin" className= "wd-signin-link"> Sign in </Link>
       </div>
