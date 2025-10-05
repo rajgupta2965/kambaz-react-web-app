@@ -5,13 +5,15 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import Piazza from "./Piazza";
 import Zoom from "./Zoom";
-import Quizzes from "./Assignments/Quizzes";
+import Quizzes from "./Quizzes/Quizzes";
 import Grades from "./Grades";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router-dom";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
 import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import QuizEditor from "./Quizzes/Editor";
+import QuizDetails from "./Quizzes/Details";
 
 export default function Courses() {
   const { cid } = useParams();
@@ -26,7 +28,6 @@ export default function Courses() {
           <FaAlignJustify className="me-4 fs-4 mb-1" />
           {course && course.name} &gt; {pathname.split("/")[4]}
         </h2>
-
         <div className="d-flex">
           <div className="d-none d-md-block">
             <CourseNavigation />
@@ -41,12 +42,14 @@ export default function Courses() {
               <Route path="Assignments" element={<Assignments />} />
               <Route path="Assignments/:aid" element={<AssignmentEditor />} />
               <Route path="Quizzes" element={<Quizzes />} />
+              <Route path="Quizzes/new" element={<QuizEditor />} />
+              <Route path="Quizzes/:quizId/Details" element={<QuizDetails />} />
+              <Route path="Quizzes/:quizId/Editor" element={<QuizEditor />} />
               <Route path="Grades" element={<Grades />} />
               <Route path="People" element={<PeopleTable />} />
             </Routes>
           </div>
         </div>
-
       </div>
     </Container>
   );
